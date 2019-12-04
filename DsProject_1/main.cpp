@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 #include "Maze.h"
+//shir hita po
 
 void cleanBuffer();
 void createYourMaze(Maze& maze);
