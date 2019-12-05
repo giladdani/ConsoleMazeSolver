@@ -9,6 +9,8 @@ class Maze
 public:
 	Maze() = default;
 	Maze(char** mat, int rows, int cols);
+	Maze(Maze&& other);
+	~Maze();
 	void print();
 
 	// Gettters and Setters
