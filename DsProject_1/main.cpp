@@ -3,6 +3,7 @@ using namespace std;
 #include <stdlib.h>
 #include <time.h>
 #include "Maze.h"
+#include "Stack.h"
 
 void initMenu();
 void cleanBuffer();
@@ -27,6 +28,7 @@ void initMenu()
 {
 	Maze maze;
 	char choice;
+	int rows, cols;
 
 	cout << "Choose an option: (A or B)" << endl <<
 		"A) Create your own new maze" << endl <<
@@ -39,6 +41,24 @@ void initMenu()
 		cout << "Please choose a valid option" << endl;
 		cin >> choice;
 	}
+
+	cout << "Enter number of rows(max 25): ";
+	cin >> rows;
+	while (rows > MAX_ROWS)
+	{
+		cout << "Please enter a valid input: ";
+		cin >> rows;
+	}
+	cout << "Enter number of cols(max 80): ";
+	cin >> cols;
+	while (cols > MAX_COLS)
+	{
+		cout << "Please enter a valid input: ";
+		cin >> cols;
+	}
+
+	maze.setCols(cols);
+	maze.setRows(rows);
 
 	if (choice == OPTION_A)
 	{
@@ -55,22 +75,8 @@ void initMenu()
 // craete your maze
 void createYourMaze(Maze& maze)
 {
-	int rows, cols;
-
-	cout << "Enter number of rows(max 25): ";
-	cin >> rows;
-	while (rows > MAX_ROWS)
-	{
-		cout << "Please enter a valid input: ";
-		cin >> rows;
-	}
-	cout << "Enter number of cols(max 80): ";
-	cin >> cols;
-	while (cols > MAX_COLS)
-	{
-		cout << "Please enter a valid input: ";
-		cin >> cols;
-	}
+	int rows = maze.getRows();
+	int cols = maze.getCols();
 	char** mat = new char*[rows];
 	cin.ignore();
 	
@@ -82,31 +88,52 @@ void createYourMaze(Maze& maze)
 		//mat[i][cols + 2] = '\0';
 	}
 
-	maze.setCols(cols);
-	maze.setRows(rows);
 	maze.setMat(mat);
 }
 
 // generate maze
 void generateMaze(Maze& maze)
 {
-	int rows, cols;
+	int rows = maze.getRows();
+	int cols = maze.getCols();
 
-	cout << "Enter number of rows(max 25): ";
-	cin >> rows;
-	while (rows > MAX_ROWS)
+	maze.createStartingMaze(rows, cols);
+
+	Square** neighbors;
+	int randomNeighbor, size;
+	bool flag, completed = false;
+	ListNode* curr;
+	Stack mazeStack;
+	mazeStack.Push(1, 1);
+	while (!mazeStack.IsEmpty() && !completed)
 	{
-		cout << "Please enter a valid input: ";
-		cin >> rows;
+		flag = false;
+		curr = mazeStack.Pop();
+		int row = curr->getSquare()->getRow();
+		int col = curr->getSquare()->getCol();
+		maze.markSquare(row, col);
+
+		neighbors = maze.getSquareNeighbors(row, col, flag, size);
+		if (flag)
+		{
+			srand((unsigned)time(NULL));
+			randomNeighbor = rand() % size;
+			maze.BreakWall(curr->getSquare(), neighbors[randomNeighbor]);
+		}
+		mazeStack.Push(curr);
+		mazeStack.Push(neighbors[randomNeighbor]->getRow(), neighbors[randomNeighbor]->getCol());
+		if ((mazeStack.Top()->getSquare()->getRow == maze.getRows() - 2) && (mazeStack.Top()->getSquare()->getCol == maze.getCols() - 2))
+			completed = true;
+
+		/*if (maze.isAvailableNeighbors(row, col))
+		{
+			
+
+			
+
+		}*/
 	}
-	cout << "Enter number of cols(max 80): ";
-	cin >> cols;
-	while (cols > MAX_COLS)
-	{
-		cout << "Please enter a valid input: ";
-		cin >> cols;
-	}
-	// start breaking walls with Stack
+	cout << "maze is completed (notice: it will destroyed when we exit init maze function!!!!!!!!!!";
 }
 
 // cleans buffer out of any left inputs

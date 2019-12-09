@@ -124,12 +124,14 @@
     <ClCompile Include="ListNode.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ListNode.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Stack.h" />
   </ItemGroup>

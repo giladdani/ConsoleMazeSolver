@@ -6,12 +6,15 @@
 class ListNode
 {
 public:
-	ListNode(Square square, ListNode* next);
+	ListNode(const Square* square, ListNode* next);
 	~ListNode();
-	// GETTERS SETTERS
+	// Getters
+	ListNode* getNext() const;
+	const Square* getSquare() const;
+
 
 private:
-	Square square;
+	const Square* square;
 	ListNode* next;
 };
 

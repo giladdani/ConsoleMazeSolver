@@ -6,14 +6,15 @@
 class Stack
 {
 public:
-	Stack();	//ctor
-	~Stack();	// dtor
+	Stack();	// c'tor
+	~Stack();	// d'tor
 
 	void MakeEmpty();
-	bool IsEmpty();			// bool or int?
-	void Push(Square* square);	// pointer or not?
-	Square* Pop();
-	Square* Top();
+	bool IsEmpty();
+	void Push(int row, int col);
+	void Push(ListNode* newNode);
+	ListNode* Pop();
+	ListNode* Top();
 
 private:
 	ListNode* top;

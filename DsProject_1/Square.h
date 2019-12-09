@@ -7,7 +7,10 @@ using namespace std;
 class Square
 {
 public:
-	// GETTERS, SETTERS
+	Square(int row, int col);
+	int getRow() const;
+	int getCol() const;
+
 private:
 	int row, col;
 };
