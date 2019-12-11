@@ -1,21 +1,24 @@
 #include "ListNode.h"
 
-//ctor
-ListNode::ListNode(const Square* square, ListNode* next) : square(square)
+// c'tor
+ListNode::ListNode(const Point* point, ListNode* next) : point(point)
 {
 	this->next = next;
 }
 
+// d'tor
 ListNode::~ListNode()
 {
-	// wtf?
+	delete point;
+	// delete next?
 }
 
+// Getters
 ListNode* ListNode::getNext() const
 {
 	return this->next;
 }
-const Square* ListNode::getSquare() const
+const Point* ListNode::getPoint() const
 {
-	return square;
+	return point;
 }

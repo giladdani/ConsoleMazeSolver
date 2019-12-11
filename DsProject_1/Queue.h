@@ -1,4 +1,19 @@
+#ifndef __QUEUE_H
+#define __QUEUE_H
+
+#include "Point.h"
+
 class Queue
 {
-	Queue() = default;
+public:
+	Queue() = delete;
+	Queue(int size);
+	~Queue();
+public:
+
+private:
+	Point** arr;
+	int currSize;
 };
+
+#endif

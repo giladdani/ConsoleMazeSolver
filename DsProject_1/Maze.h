@@ -2,22 +2,27 @@
 #define __MAZE_H
 
 #include <iostream>
-#include "Square.h"
+#include "Point.h"
 using namespace std;
+
+const char EMPTY = ' ';
+const char WALL = '*';
+const char VISITED = '$';
 
 class Maze
 {
 public:
 	Maze() = default;
 	Maze(char** mat, int rows, int cols);
-	Maze(Maze&& other);
+	//Maze(Maze&& other);	// move c'tor
 	~Maze();
+
+public:
 	void print() const;
 	void createStartingMaze(int rows, int cols);
-	void markSquare(int row, int col);
-	Square** getSquareNeighbors(int row, int col, bool &flag, int &size);
-	//bool isAvailableNeighbors(int row, int col);
-	void BreakWall(const Square *curr, Square *neighbor);
+	void markVisited(int row, int col);
+	Point** getAvailableNeighbors(int row, int col, bool &hasAvailableNeighbors, int &size) const;
+	void BreakWall(const Point* curr,const Point* neighbor);
 
 	// Getters
 	int getRows()	const;

@@ -6,15 +6,15 @@
 class Stack
 {
 public:
-	Stack();	// c'tor
-	~Stack();	// d'tor
+	Stack();
+	~Stack();
 
 	void MakeEmpty();
-	bool IsEmpty();
+	bool IsEmpty() const;
 	void Push(int row, int col);
 	void Push(ListNode* newNode);
 	ListNode* Pop();
-	ListNode* Top();
+	const ListNode* Top();
 
 private:
 	ListNode* top;

@@ -1,13 +1,16 @@
-#ifndef __SQUARE_H
-#define __SQUARE_H
+#ifndef __POINT_H
+#define __POINT_H
 
 #include <iostream>
 using namespace std;
 
-class Square
+class Point
 {
 public:
-	Square(int row, int col);
+	Point() = default;
+	Point(int row, int col);
+
+	// Getters
 	int getRow() const;
 	int getCol() const;
 

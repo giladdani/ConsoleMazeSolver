@@ -12,6 +12,7 @@ Stack::~Stack()
 	MakeEmpty();
 }
 
+// cleans the stack out of any values
 void Stack::MakeEmpty()
 {
 	ListNode* curr = this->top;
@@ -22,25 +23,30 @@ void Stack::MakeEmpty()
 		top = curr;
 	}
 }
-bool Stack::IsEmpty()
+
+// returns true if the stack is empty
+bool Stack::IsEmpty() const
 {
 	if (this->top == NULL)
 		return true;
 	return false;
 }
 
+// creates and inserts a new point to the stack by given row and column
 void Stack::Push(int row, int col)
 {
-	Square* square = new Square(row, col);
-	ListNode* newNode = new ListNode(square, this->top);
+	Point* point = new Point(row, col);
+	ListNode* newNode = new ListNode(point, this->top);
 	this->top = newNode;
 }
 
+// inserts point to stack
 void Stack::Push(ListNode* newNode)
 {
 	this->top = newNode;
 }
 
+// deletes and returns top of stack
 ListNode* Stack::Pop()
 {
 	if (IsEmpty())
@@ -56,7 +62,8 @@ ListNode* Stack::Pop()
 	}
 }
 
-ListNode* Stack::Top()
+// returns the top of the stack
+const ListNode* Stack::Top()
 {
 	return this->top;
 }

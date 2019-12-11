@@ -1,20 +1,21 @@
 #ifndef __LISTNODE_H
 #define __LISTNODE_H
 
-#include "Square.h"
+#include "Point.h"
 
 class ListNode
 {
 public:
-	ListNode(const Square* square, ListNode* next);
+	ListNode(const Point* point, ListNode* next);
 	~ListNode();
+
 	// Getters
 	ListNode* getNext() const;
-	const Square* getSquare() const;
+	const Point* getPoint() const;
 
 
 private:
-	const Square* square;
+	const Point* point;
 	ListNode* next;
 };
 
