@@ -10,10 +10,16 @@ public:
 	Queue(int size);
 	~Queue();
 public:
-
+	void MakeEmpty();
+	bool IsEmpty() const;
+	const Point* Front() const;
+	void EnQueue(Point* newPoint);
+	void EnQueue(int row, int col);
+	Point* DeQueue();
 private:
 	Point** arr;
-	int currSize;
+	int maxSize;
+	int head, tail;
 };
 
 #endif

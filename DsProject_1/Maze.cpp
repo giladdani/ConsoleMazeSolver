@@ -3,37 +3,27 @@
 // c'tor
 Maze::Maze(char** mat, int rows, int cols) : mat(mat), rows(rows), cols(cols) {}
 
-// move c'tor
-//Maze::Maze(Maze&& other)
-//{
-//	this->mat = other.mat;
-//	this->rows = other.rows;
-//	this->cols = other.cols;
-//
-//	other.mat = nullptr;
-//}
-
 // d'tor
 Maze::~Maze()
 {
-	if(mat != nullptr)
+	if (mat != nullptr)
 	{
 		for (int i = 0; i < rows; i++)
 		{
 			delete mat[i];
 		}
 	}
-	delete []mat;
+	delete[]mat;
 }
 
 // Getters
 int Maze::getRows()	const
 {
-	return this->rows;
+	return rows;
 }
 int Maze::getCols() const
 {
-	return this->cols;
+	return cols;
 }
 
 // Setters
@@ -56,7 +46,6 @@ bool Maze::setCols(int cols)
 // print
 void Maze::print() const
 {
-	cout << "Here is the maze:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
 		cout << mat[i] << endl;
@@ -66,72 +55,68 @@ void Maze::print() const
 // marks the given coordinate with '$' as "visited"
 void Maze::markVisited(int row, int col)
 {
-	this->mat[row][col] = VISITED;
+	mat[row][col] = Point::VISITED;
 }
 
 // create a starting maze template
 void Maze::createStartingMaze(int rows, int cols)
 {
-	this->mat = new char*[rows];
+	mat = new char*[rows];
 
 	for (int i = 0; i < rows; i++)
 	{
-		this->mat[i] = new char[cols + 1];
+		mat[i] = new char[cols + 1];
 		for (int j = 0; j < cols; j++)
 		{
 			if (i % 2 == 0)
-				this->mat[i][j] = WALL;
+				mat[i][j] = Point::WALL;
 			else
 			{
 				if (j % 2 == 0)
-					this->mat[i][j] = WALL;
+					mat[i][j] = Point::Point::WALL;
 				else
-					this->mat[i][j] = EMPTY;
+					mat[i][j] = Point::Point::EMPTY;
 			}
 		}
-		this->mat[i][cols] = '\0';
+		mat[i][cols] = '\0';
 	}
-	this->mat[1][0] = EMPTY;					// maze start
-	this->mat[rows - 2][cols - 1] = EMPTY;	// maze exit
+	mat[1][0] = Point::EMPTY;					// maze start
+	mat[rows - 2][cols - 1] = Point::EMPTY;		// maze exit
 }
 
 // returns an array of Points that are the 'Second neighbors' of the given coordinate 
-Point** Maze::getAvailableNeighbors(int row, int col, bool &hasAvailableNeighbors, int& size) const
+Point** Maze::getAvailableNeighbors(int row, int col, int& size, int distance) const
 {
 	size = 0;
 	Point** neighbors = new Point*[4];
-	
+
 	// these if statments also filter "visited" neighbors because they look for space only (and not $)
 
 	// right neighbor
-	if (col + 2 < this->getCols() && (this->mat[row][col + 2] == ' '))
+	if (col + distance < this->getCols() && (mat[row][col + distance] == Point::EMPTY))
 	{
-		neighbors[size] = new Point(row, col + 2);
-		hasAvailableNeighbors = true;
+		neighbors[size] = new Point(row, col + distance);
 		size++;
 	}
 
 	// down neighbor
-	if (row + 2 < this->getRows() && (this->mat[row + 2][col] == ' '))
+	if (row + distance < this->getRows() && (mat[row + distance][col] == Point::EMPTY))
 	{
-		neighbors[size] = new Point(row + 2, col);
-		hasAvailableNeighbors = true;
+		neighbors[size] = new Point(row + distance, col);
 		size++;
 	}
 
 	// left neighbor
-	if ((col - 2 > 0) && (this->mat[row][col - 2] == ' '))
+	if ((col - distance > 0) && (mat[row][col - distance] == Point::EMPTY))
 	{
-		neighbors[size] = new Point(row, col - 2);
-		hasAvailableNeighbors = true;
+		neighbors[size] = new Point(row, col - distance);
 		size++;
 	}
-	
+
 	// up neighbor
-	if ((row - 2 > 0) && (this->mat[row - 2][col] == ' '))
+	if ((row - distance > 0) && (mat[row - distance][col] == Point::EMPTY))
 	{
-		neighbors[size] = new Point(row - 2, col);
-		hasAvailableNeighbors = true;
+		neighbors[size] = new Point(row - distance, col);
 		size++;
 	}
 	return neighbors;
@@ -145,14 +130,27 @@ void Maze::BreakWall(const Point* curr, const Point* neighbor)
 
 	// left neighbor
 	if (colDiff == 2)
-		this->mat[curr->getRow()][curr->getCol() - 1] = ' ';
+		mat[curr->getRow()][curr->getCol() - 1] = Point::EMPTY;
 	// right neighbor
 	if (colDiff == -2)
-		this->mat[curr->getRow()][curr->getCol() + 1] = ' ';
+		mat[curr->getRow()][curr->getCol() + 1] = Point::EMPTY;
 	// up neighbor
 	if (rowDiff == 2)
-		this->mat[curr->getRow() - 1][curr->getCol()] = ' ';
+		mat[curr->getRow() - 1][curr->getCol()] = Point::EMPTY;
 	// down neighbor
-	if(rowDiff == -2)
-		this->mat[curr->getRow() + 1][curr->getCol()] = ' ';
+	if (rowDiff == -2)
+		mat[curr->getRow() + 1][curr->getCol()] = Point::EMPTY;
+}
+
+// marks any 'visited' point in the maze as 'empty'
+void Maze::cleanVisited()
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			if (mat[i][j] == Point::VISITED)
+				mat[i][j] = Point::EMPTY;
+		}
+	}
 }

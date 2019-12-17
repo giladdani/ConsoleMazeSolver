@@ -3,7 +3,7 @@
 // c'tor
 Stack::Stack()
 {
-	this->top = NULL;
+	top = NULL;
 }
 
 // d'tor
@@ -15,11 +15,11 @@ Stack::~Stack()
 // cleans the stack out of any values
 void Stack::MakeEmpty()
 {
-	ListNode* curr = this->top;
+	ListNode* curr = top;
 	while (curr != NULL)
 	{
-		curr = this->top->getNext();
-		delete this->top;
+		curr = top->getNext();
+		delete top;
 		top = curr;
 	}
 }
@@ -27,7 +27,7 @@ void Stack::MakeEmpty()
 // returns true if the stack is empty
 bool Stack::IsEmpty() const
 {
-	if (this->top == NULL)
+	if (top == NULL)
 		return true;
 	return false;
 }
@@ -36,14 +36,14 @@ bool Stack::IsEmpty() const
 void Stack::Push(int row, int col)
 {
 	Point* point = new Point(row, col);
-	ListNode* newNode = new ListNode(point, this->top);
-	this->top = newNode;
+	ListNode* newNode = new ListNode(point, top);
+	top = newNode;
 }
 
 // inserts point to stack
 void Stack::Push(ListNode* newNode)
 {
-	this->top = newNode;
+	top = newNode;
 }
 
 // deletes and returns top of stack
@@ -56,8 +56,8 @@ ListNode* Stack::Pop()
 	}
 	else
 	{
-		ListNode* temp = this->top;
-		this->top = this->top->getNext();
+		ListNode* temp = top;
+		top = top->getNext();
 		return temp;
 	}
 }
@@ -65,5 +65,5 @@ ListNode* Stack::Pop()
 // returns the top of the stack
 const ListNode* Stack::Top()
 {
-	return this->top;
+	return top;
 }

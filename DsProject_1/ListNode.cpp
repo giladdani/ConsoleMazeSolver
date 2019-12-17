@@ -16,7 +16,7 @@ ListNode::~ListNode()
 // Getters
 ListNode* ListNode::getNext() const
 {
-	return this->next;
+	return next;
 }
 const Point* ListNode::getPoint() const
 {

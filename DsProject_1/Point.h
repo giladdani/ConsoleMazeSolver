@@ -4,8 +4,17 @@
 #include <iostream>
 using namespace std;
 
+//const char EMPTY = ' ';
+//const char WALL = '*';
+//const char VISITED = '$';
+
 class Point
 {
+public:
+	static const char EMPTY = ' ';
+	static const char WALL = '*';
+	static const char VISITED = '$';
+
 public:
 	Point() = default;
 	Point(int row, int col);
